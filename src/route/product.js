@@ -39,7 +39,6 @@ path.route('/product').post((req, res) => {
 });
 
 
-
 /**
  * Methode GET
  * Afficher un produit en fonction de son ID
@@ -51,7 +50,7 @@ path.route('/product/:id').get((req, res) => {
         if (err) {
             throw err;
         }
-        res.json({ message: 'Produit n°' + req.params.id + product});
+        res.json({ message: 'Produit n°' + req.params.id, product});
     });
 });
 
@@ -69,7 +68,7 @@ path.route('/product/:id').delete((req, res) => {
             throw err;
         }
         console.log('Produit supprimé : ' + req.params.id);
-        res.json({ message: 'Suppression du produit n°' + req.params.id , product: product });
+        res.json({ message: 'Suppression du produit n°' + req.params.id, product });
     });
 });
 

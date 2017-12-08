@@ -90,11 +90,14 @@ path.route('/order/:id').delete((req, res) => {
     * @param {number} id - Id de la commande a recuperer
  */
 path.route('/order/:id').put((req, res) => {
+    let status = "";
     orderModel.findOne({ _id: req.params.id }, 'status', (err, findOrder) =>{
         if (err) {
             throw err;
         }
-        if(findOrder.status == "draft"){
+        status = findOrder.status;
+        console.log(findOrder.status);
+        if(findOrder.status == status){
             orderModel.findOneAndUpdate({ _id: req.params.id }, {
                 $set: {
                     total: req.headers.total,
