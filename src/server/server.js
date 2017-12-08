@@ -1,6 +1,6 @@
 const express = require ('express');
 
-class serverWeb {
+class Server {
     constructor() {
         this.express = null;
         this.server = null;
@@ -11,19 +11,20 @@ class serverWeb {
 
         this.server = this.express.listen(port, (err) => {
             if (typeof callback === 'function') {
-                callback(err, this.express);
-            }
-        });
+            callback(err, this.express);
+            console.log('Serveur lancé sur : http://localhost:' + port + "/");
+        }
+    });
     }
     close(callback) {
-        if (this.server === null) {
-            callback(new Error('Web Server is not running'));
+        if (this.server === nul) {
+            callback(new Error('Le serveur ne fonctionne pas.'));
         } else {
             this.server.close((err) => {
                 if (typeof callback === 'function') {
-                    callback(err);
-                }
-            });
+                callback(err);
+            }
+        });
         }
     }
 
@@ -32,4 +33,4 @@ class serverWeb {
     }
 }
 
-module.exports = new serverWeb();
+module.exports = new Server();

@@ -1,25 +1,33 @@
 const mongoose = require ('mongoose');
 
-let productSchema,
-    orderSchema,
-    orderLineSchema;
-let productModel,
-    orderModel,
-    orderLineModel;
+//Schemas
+let productSchema, orderSchema, orderLineSchema;
+//Models
+let productModel, orderModel, orderLineModel;
+
 
 class Db {
     constructor() {
         this.database = null;
 
         this.productSchema = new mongoose.Schema({
-            name: String,
+            name: {
+                type: String,
+                required: true
+            },
             price: Number,
         });
         this.orderSchema = new mongoose.Schema({
             code: String,
-            date: { type: Date, default: Date.now },
+            date: {
+                type: Date,
+                default: Date.now
+            },
             total: Number,
-            status: { type: String, default: 'draft' },
+            status: {
+                type: String,
+                default: 'draft'
+            },
         });
         this.orderLineSchema = new mongoose.Schema({
             product: String,
@@ -28,8 +36,8 @@ class Db {
         });
     }
 
-    start() {
-        this.database = mongoose.connect('mongodb://127.0.0.1:27017/data', { useMongoClient: true }, (err) => {
+    connexion() {
+        this.database = mongoose.connect('mongodb://127.0.0.1/data', { useMongoClient: true }, (err) => {
             if (err) {
                 throw err;
             }
@@ -61,4 +69,6 @@ class Db {
         return this.orderLineModel;
     }
 }
+
+
 module.exports = new Db();
