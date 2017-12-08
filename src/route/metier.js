@@ -64,24 +64,26 @@ path.route('/order/:id/confirm').put((req, res) => {
  */
 
 path.route('/dashboard/orders').get((req, res) => {
-    let mois = new Array;
-    let chiffre = new Array();
+    let chiffre = new Map();
 
-    orderModel.find({}, 'date', function(err, order) {
+    orderModel.find({status: 'confirmed'}, function(err, orders) {
         if (err) {
             throw err;
         }
-        for(var i = 0 ; i < order.length; i++){
-            console.log(order);
-            mois.push(order[i].date);
-            console.log(mois[i].getMonth()); //Affiche le numero du mois
+
+        for (let i = 1; i < 13; i++) {
+            chiffre.set(i, 0);
         }
 
-        // res.json({ message: 'Chiffre d\'affaire : ' + mois.getMonth() });
+        for(var i = 0 ; i < orders.length; i++){
+            let order = orders[i];
+            let month = order.date.getMonth()+1;
+            if (chiffre.has(month)) {
+                chiffre.set(month, order.total+chiffre.get(month));
+            }
+        }
         res.json({ message: 'Chiffre d\'affaire : '});
     });
-
-    //res.json({ message: "Chiffre d'affaire par mois" });
 });
 
 
