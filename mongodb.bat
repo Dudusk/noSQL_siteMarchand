@@ -1,0 +1,1 @@
+mongod --dbpath "D:\Ingesup B3\Node.js\data_mongodb"
