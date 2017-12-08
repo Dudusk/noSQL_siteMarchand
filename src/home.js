@@ -1,20 +1,20 @@
-const webserver = require ('./server/server.js');
+const server = require ('./server/server.js');
+const db = require ('../src/mongodb/db.js');
+const port = 3001;
+
 const orderline = require ('../src/route/orderline.js');
 const metier = require ('../src/route/metier.js');
 const product = require ('../src/route/product.js');
 const order = require ('../src/route/order.js');
-const db = require ('../src/mongodb/db.js');
 
-console.log(webserver);
 
-webserver.start(3001, (err, express) => {
+server.start(port, (err, express) => {
     if (!err) {
-        console.log('Server is starting !');
-        webserver.express.use(orderline);
-        webserver.express.use(metier);
-        webserver.express.use(product);
-        webserver.express.use(order);
-    }
+    server.express.use(orderline);
+    server.express.use(metier);
+    server.express.use(product);
+    server.express.use(order);
+}
 });
 
-db.start();
+db.connexion();
