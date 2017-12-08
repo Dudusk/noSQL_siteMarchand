@@ -17,7 +17,7 @@ class Server {
     });
     }
     close(callback) {
-        if (this.server === nul) {
+        if (this.server === null) {
             callback(new Error('Le serveur ne fonctionne pas.'));
         } else {
             this.server.close((err) => {
