@@ -8,7 +8,7 @@
     "build-babel": "npx babel ./src --out-dir ./dist --copy-files",
     "eslint": "npx eslint ./src",
     "eslint-fix": "npm run eslint --fix",
-    "doc": "jsdoc ./src -r -d ./documentation",
+    "doc": "npx jsdoc ./src -r -d ./documentation",
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test-watch": "npm run test -- --watch"
   },
