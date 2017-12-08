@@ -82,7 +82,7 @@ path.route('/dashboard/orders').get((req, res) => {
                 chiffre.set(month, order.total+chiffre.get(month));
             }
         }
-        res.json({ message: 'Chiffre d\'affaire : '});
+        res.json({ message: 'Chiffre d\'affaire : ', data:chiffre});
     });
 });
 
