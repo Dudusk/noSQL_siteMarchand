@@ -1,7 +1,14 @@
 const express = require ('express');
 const db = require ('../mongodb/db.js');
+
 const path = express.Router();
-const productModel = db.modelProduct();
+const usersModel = db.modelUsers();
+
+
+// Page d'accueil
+path.route('/').all((req, res) => {
+    res.json({ message: 'Page d\'accueil. v1.0'});
+});
 
 
 /**
@@ -9,12 +16,12 @@ const productModel = db.modelProduct();
  * Lister tous les produits
     * @callback product
  */
-path.route('/product').get((req, res) => {
-    productModel.find((err, product) => {
+path.route('/users').get((req, res) => {
+    usersModel.find((err, users) => {
         if (err) {
             throw err;
         }
-        res.json({ message: 'Liste de tous les produits :', product });
+        res.json({ message: 'Liste de tous les users :', users });
     })
 });
 
@@ -26,15 +33,15 @@ path.route('/product').get((req, res) => {
     * @param {string} name - Nom du produit
     * @param {number} price - Prix du produit
  */
-path.route('/product').post((req, res) => {
-    const newProduct = new productModel({});
-     newProduct.name = req.headers.name;
-     newProduct.price = req.headers.price;
-     newProduct.save((err) => {
+path.route('/user').post((req, res) => {
+    const newUser = new usersModel({});
+     newUser.name = req.headers.name;
+     newUser.price = req.headers.price;
+     newUser.save((err) => {
          if (err) {
              throw err;
          }
-         res.json({message: 'Ajout du produit :', newProduct});
+         res.json({message: 'Ajout du user :', newUser});
      });
 });
 
@@ -45,12 +52,12 @@ path.route('/product').post((req, res) => {
     * @param {number} id - Id du produit a recuperer
     * @callback product
  */
-path.route('/product/:id').get((req, res) => {
-    productModel.find({_id: req.params.id}, (err, product) => {
+path.route('/user/:id').get((req, res) => {
+    usersModel.find({_id: req.params.id}, (err, user) => {
         if (err) {
             throw err;
         }
-        res.json({ message: 'Produit n°' + req.params.id, product});
+        res.json({ message: 'User n°' + req.params.id, user});
     });
 });
 
@@ -62,13 +69,13 @@ path.route('/product/:id').get((req, res) => {
     * @param {number} id - Id du produit a supprimer
     * @callback product
  */
-path.route('/product/:id').delete((req, res) => {
-    productModel.deleteOne({ _id: req.params.id }, (err, product) =>{
+path.route('/user/:id').delete((req, res) => {
+    usersModel.deleteOne({ _id: req.params.id }, (err, user) =>{
         if (err) {
             throw err;
         }
-        console.log('Produit supprimé : ' + req.params.id);
-        res.json({ message: 'Suppression du produit n°' + req.params.id, product });
+        console.log('User supprimé : ' + req.params.id);
+        res.json({ message: 'Suppression de l\'utilisateur n°' + req.params.id, user });
     });
 });
 
@@ -81,8 +88,8 @@ path.route('/product/:id').delete((req, res) => {
     * @param {string} name - Nom du produit
     * @param {number} price - Prix du produit
  */
-path.route('/product/:id').put((req, res) => {
-    productModel.findOneAndUpdate({ _id: req.params.id }, {
+path.route('/user/:id').put((req, res) => {
+    usersModel.findOneAndUpdate({ _id: req.params.id }, {
         $set: {
             name: req.headers.name,
             price: req.headers.price
@@ -92,9 +99,10 @@ path.route('/product/:id').put((req, res) => {
         sort: {id: -1 },
         upsert: true,
     }, (err, res) => {
-        res.json({ message: 'Modification de la produit n°' + req.params.id + product });
+        res.json({ message: 'Modification du user n°' + req.params.id + user });
     });
 });
+
 
 
 module.exports = path;

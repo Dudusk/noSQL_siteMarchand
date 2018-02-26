@@ -1,43 +1,83 @@
 const mongoose = require ('mongoose');
 
 //Schemas
-let productSchema, orderSchema, orderLineSchema;
+let composantsSchema, usersSchema;
 //Models
-let productModel, orderModel, orderLineModel;
+let composantsModel, usersModel;
 
 
 class Db {
     constructor() {
         this.database = null;
 
-        this.productSchema = new mongoose.Schema({
-            name: {
+        this.composantsSchema = new mongoose.Schema({
+            nom: {
                 type: String,
-                required: true
+                description: "Le nom du produit"
             },
-            price: Number,
-        });
-        this.orderSchema = new mongoose.Schema({
-            code: String,
-            date: {
-                type: Date,
-                default: Date.now
+            marque: {
+                type: Number,
+                description: "La marque du produit"
             },
-            total: Number,
-            status: {
+            type: {
                 type: String,
-                default: 'draft'
+                description: "Type du produit"
             },
+            code_barre: {
+                type: String,
+                description: "Le code barre du produit"
+            },
+            prix: {
+                type: String,
+                description: "Le prix du produit"
+            },
+            desc_technique: {
+                type: String,
+                description: "Description technique"
+            },
+            commentaire: {
+                type: String,
+                description: "Le commentaire de l'utilisateur"
+            },
+            note: {
+                type: String,
+                description: "La note de l'utilisateur"
+            },
+            compatibilite: {
+                type: Object,
+                description: "L'id avec les composants compatible avec celui-la"
+            }
         });
-        this.orderLineSchema = new mongoose.Schema({
-            product: String,
-            order: String,
-            quantity: Number,
+        this.usersSchema = new mongoose.Schema({
+            nom: {
+                type: String,
+                description: "Le nom de l'utilisateur"
+            },
+            prenom: {
+                type: Number,
+                description: "Le prenom de l'utilisateur"
+            },
+            adresse: {
+                type: String,
+                description: "L'adresse de l'utilisateur"
+            },
+            tel: {
+                type: String,
+                description: "Le tel de l'utilisateur"
+            },
+            login: {
+                type: String,
+                description: "login"
+            },
+            password: {
+                type: String,
+                description: "password"
+            }
         });
     }
 
     connexion() {
-        this.database = mongoose.connect('mongodb://127.0.0.1/data', { useMongoClient: true }, (err) => {
+        this.database = mongoose.connect('mongodb://127.0.0.1/LDLClevelTwo', { useMongoClient: true }, (err) => {
             if (err) {
                 throw err;
             }
@@ -48,25 +88,18 @@ class Db {
         return mongoose;
     }
 
-    modelOrder() {
-        if (this.orderModel == null) {
-            this.orderModel = mongoose.model('order', this.orderSchema);
+    modelComposants() {
+        if (this.composantsModel == null) {
+            this.composantsModel = mongoose.model('composants', this.composantsSchema);
         }
-        return this.orderModel;
+        return this.composantsModel;
     }
 
-    modelProduct() {
-        if (this.productModel == null) {
-            this.productModel = mongoose.model('product', this.productSchema);
+    modelUsers() {
+        if (this.usersModel == null) {
+            this.usersModel = mongoose.model('users', this.usersSchema);
         }
-        return this.productModel;
-    }
-
-    modelOrderLine() {
-        if (this.orderLineModel == null) {
-            this.orderLineModel = mongoose.model('orderLine', this.orderLineSchema);
-        }
-        return this.orderLineModel;
+        return this.usersModel;
     }
 }
 

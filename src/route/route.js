@@ -7,21 +7,15 @@ const path = express.Router();
 
 /**
  * Models MongoDB
- * Model product
+ * Model composants
  */
-const productModel = db.database.model('product', productSchema);
+const composantsModel = db.database.model('composants', composantsSchema);
 
 /**
  * Model MongoDB
- * Model order
+ * Model users
  */
-const orderModel = db.database.model('order', orderSchema);
-
-/**
- * Model MongoDB
- * Model orderline
- */
-const orderLineModel = db.database.model('orderLine', orderLineSchema);
+const usersModel = db.database.model('users', usersSchema);
 
 
 module.exports = path;

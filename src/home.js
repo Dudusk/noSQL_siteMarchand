@@ -2,18 +2,14 @@ const server = require ('./server/server.js');
 const db = require ('../src/mongodb/db.js');
 const port = 3001;
 
-const orderline = require ('../src/route/orderline.js');
-const metier = require ('../src/route/metier.js');
-const product = require ('../src/route/product.js');
-const order = require ('../src/route/order.js');
+const composants = require ('../src/route/composants.js');
+const users = require ('../src/route/users.js');
 
 
 server.start(port, (err, express) => {
     if (!err) {
-    server.express.use(orderline);
-    server.express.use(metier);
-    server.express.use(product);
-    server.express.use(order);
+    server.express.use(composants);
+    server.express.use(users);
 }
 });
 
